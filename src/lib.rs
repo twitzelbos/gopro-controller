@@ -43,7 +43,7 @@ impl GoPro {
 
         self.device
             .write(
-                &command_write_char,
+                command_write_char,
                 command.as_bytes(),
                 WriteType::WithoutResponse,
             )
@@ -90,7 +90,7 @@ impl GoPro {
 
         self.device
             .write(
-                &settings_write_char,
+                settings_write_char,
                 setting.as_bytes(),
                 WriteType::WithoutResponse,
             )
@@ -239,7 +239,7 @@ pub async fn init(adapter_index: Option<usize>) -> Result<Adapter, Box<dyn Error
     // get the first bluetooth adapter
     let adapters = manager.adapters().await?;
 
-    if adapters.len() <= 0 {
+    if adapters.is_empty() {
         return Err("No Bluetooth Adapters".into());
     }
 
@@ -298,7 +298,7 @@ pub async fn connect(
     //subscribe to the proper notify characteristics
     let characteristics = device.characteristics();
 
-    if characteristics.len() == 0 {
+    if characteristics.is_empty() {
         return Err("No characteristics found on this GoPro".into());
     }
 
@@ -306,7 +306,7 @@ pub async fn connect(
     //TODO: Send off subscriptions concurently ?
     for c in &characteristics {
         if c.properties.bits() == CharPropFlags::NOTIFY.bits() {
-            device.subscribe(&c).await?;
+            device.subscribe(c).await?;
         }
     }
 

@@ -13,7 +13,7 @@ async fn test_whole_lifecycle() {
     let mut central = init(None).await.unwrap();
     let mut devices = scan(&mut central).await.unwrap();
     devices.retain(|d| d.contains("GoPro"));
-    assert!(devices.len() > 0, "No GoPro devices found");
+    assert!(!devices.is_empty(), "No GoPro devices found");
 
     let gopro = connect(devices.first().unwrap().clone(), &mut central)
         .await
@@ -172,7 +172,7 @@ async fn test_some_settings() {
     let mut central = init(None).await.unwrap();
     let mut devices = scan(&mut central).await.unwrap();
     devices.retain(|d| d.contains("GoPro"));
-    assert!(devices.len() > 0, "No GoPro devices found");
+    assert!(!devices.is_empty(), "No GoPro devices found");
 
     let gopro = connect(devices.first().unwrap().clone(), &mut central)
         .await
@@ -207,7 +207,7 @@ async fn reset_testing() {
     let mut central = init(None).await.unwrap();
     let mut devices = scan(&mut central).await.unwrap();
     devices.retain(|d| d.contains("GoPro"));
-    assert!(devices.len() > 0, "No GoPro devices found");
+    assert!(!devices.is_empty(), "No GoPro devices found");
 
     let gopro = connect(devices.first().unwrap().clone(), &mut central)
         .await

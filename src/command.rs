@@ -35,7 +35,7 @@ use GoProCommand as GPC; //alias for conciseness
 ///<https://gopro.github.io/OpenGoPro/ble_2_0#commands-quick-reference>
 impl Sendable for GPC {
     fn as_bytes(&self) -> &'static [u8] {
-        match self.as_ref() {
+        match self {
             GPC::ShutterStart => &[0x03, 0x01, 0x01, 0x01],
             GPC::ShutterStop => &[0x03, 0x01, 0x01, 0x00],
             GPC::Sleep => &[0x01, 0x05],
@@ -46,7 +46,7 @@ impl Sendable for GPC {
         }
     }
     fn response_value_bytes(&self) -> &'static [u8] {
-        match self.as_ref() {
+        match self {
             GPC::ShutterStart => &[0x02, 0x01, 0x00],
             GPC::ShutterStop => &[0x02, 0x01, 0x00],
             GPC::Sleep => &[0x02, 0x05, 0x00],
